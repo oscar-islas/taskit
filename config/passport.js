@@ -2,8 +2,12 @@
 const passport = require('passport');
 const bcrypt = require("bcryptjs");
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const {Users} = require('../models');
+require("dotenv").config();
 
+//Estrategia local
 passport.use(new LocalStrategy({
     usernameField: 'email'
 }, async (email, password, done) => {
@@ -24,18 +28,51 @@ passport.use(new LocalStrategy({
     }
 }));
 
+//Estrategia Google OAuth 2.0
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENTID,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: process.env.GOOGLE_REDIRECT_URI
+}, (accessToken, refreshToken, profile, done) => {
+    return done(null, profile);
+}));
+
+//Estrategia Facebook
+passport.use(new FacebookStrategy({
+    clientID: process.env.FB_CLIENTID,
+    clientSecret: process.env.FB_SECRET,
+    callbackURL: process.env.FB_REDIRECT_URI
+  },
+  (accessToken, refreshToken, profile, done) => {
+    return done(null, profile);
+  }
+));
+
 //Serialización
-passport.serializeUser((user, done) => {
+passport.serializeUser((profile, done) => {
     //Firmar los datos del usuario
-    return done(null, user.id);
+    return done(null, profile);
 });
 
 //Deserialización
-passport.deserializeUser(async(id, done) => {
+passport.deserializeUser(async(profile, done) => {
     //Vamos a obtener los datos del usuario a partir del ID
     try{
-        let user = await Users.findByPk(id, {plain: true});
-        done(null, user); //request -> request.user
+        switch(profile.provider){
+            case 'google': 
+                //Generado por google
+                profile.firstname = profile.name.givenName;
+                profile.lastname = profile.name.familyName;
+                done(null, profile);
+                break;
+            case 'facebook':
+                console.log(profile);
+                break;
+            default:
+                let user = await Users.findByPk(profile.id, {plain: true});
+                done(null, user); //request -> request.user
+                break;
+        }
     }catch(error){
         done(error);
     }
