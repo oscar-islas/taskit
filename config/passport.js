@@ -66,7 +66,9 @@ passport.deserializeUser(async(profile, done) => {
                 done(null, profile);
                 break;
             case 'facebook':
-                console.log(profile);
+                profile.firstname = profile.displayName;
+                profile.lastname = "";
+                done(null, profile);
                 break;
             default:
                 let user = await Users.findByPk(profile.id, {plain: true});
