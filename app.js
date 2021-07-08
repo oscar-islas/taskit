@@ -7,6 +7,7 @@ const path = require("path");
 //Rutas
 const authRouter = require('./routes/auth.routes');
 const catRouter = require('./routes/category.routes');
+const userRouter = require('./routes/user.routes');
 
 require('./config/passport');
 
@@ -36,5 +37,6 @@ app.get("/", (req, res) => {
 
 app.use(authRouter);
 app.use(catRouter);
+app.use(userRouter);
 
 module.exports = app;

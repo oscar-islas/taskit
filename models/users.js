@@ -7,7 +7,16 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     static associate(models) {
-      // define association here
+      Users.hasMany(models.Category, {
+        foreignKey: 'created_by',
+        onDelete: 'cascade'
+      });
+      Users.hasMany(models.Task, {
+        foreignKey: 'user_id'
+      });
+      Users.hasMany(models.Status, {
+        foreignKey: 'created_by'
+      });
     }
   };
   Users.init({
