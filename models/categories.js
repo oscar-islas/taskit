@@ -12,7 +12,13 @@ module.exports = (sequelize, DataTypes) => {
   };
   Category.init({
     name: DataTypes.STRING,
-    created_by: DataTypes.INTEGER
+    created_by: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Category',

@@ -10,13 +10,13 @@
             </div>
             <div class="row">
                 <div class="col-12 new-register">
-                    <form action="/" method="POST">
+                    <form action="/categorias/editar/<%= id %>" method="POST">
                         <div class="mb-3">
                             <label for="name">ID</label>
                             <input
                                 class="form-control"
                                 type="text"
-                                value="1"
+                                value="<%= id %>"
                                 disabled
                             />
                         </div>
@@ -27,7 +27,7 @@
                                 class="form-control"
                                 type="text"
                                 name="name"
-                                value="Trabajo"
+                                value="<%= name %>"
                                 required
                             />
                         </div>

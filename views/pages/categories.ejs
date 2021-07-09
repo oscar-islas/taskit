@@ -10,7 +10,7 @@
             </div>
             <div class="row">
                 <div class="col-12 new-register">
-                    <form action="/" method="POST">
+                    <form action="/categorias" method="POST">
                         <div class="mb-3">
                             <label for="name">Nombre</label>
                             <input
@@ -42,19 +42,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Trabajo</td>
-                            <td>
-                                <a href="/categorias/editar/1" class="btn btn-outline-warning">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
+                        <!-- Inicio de fila -->
+                        <% categories.forEach( (category, i) => { %>
+                            <tr>
+                                <th scope="row"><%= i + 1 %></th>
+                                <td><%= category.name %></td>
+                                <td>
+                                    <a href="/categorias/editar/<%= category.id %>" class="btn btn-outline-warning">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
 
-                                <a href="/categorias/borrar/1" class="btn btn-outline-danger">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
+                                    <a href="/categorias/borrar/<%= category.id %>" class="btn btn-outline-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                        <!-- Fin de la fila -->
                     </tbody>
                 </table>
             </div>
