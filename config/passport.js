@@ -88,7 +88,7 @@ passport.serializeUser(async (profile, done) => {
         let userObj = {
             firstname,
             lastname,
-            email: profile.email,
+            email,
             password: randPasswd(),
         };
         
