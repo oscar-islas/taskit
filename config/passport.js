@@ -82,7 +82,7 @@ passport.serializeUser(async (profile, done) => {
         let user = await checkUserExist(email);
         let providerId = profile.id;
         
-        let firstname = profile.provider === "google" ? profile.given_name : profile.givenName;
+        let firstname = profile.provider === "google" ? profile.given_name : profile.name.givenName;
         let lastname = profile.provider === "google" ? profile.family_name : profile.name.familyName;
 
         let userObj = {
