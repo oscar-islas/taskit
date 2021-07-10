@@ -37,7 +37,7 @@ const gAuthStrategy = passport.authenticate("google", {
 
 const fbAuthStrategy = passport.authenticate("facebook", {
     session: true,
-    scope: ["email", "profile"],
+    scope: ["email", "public_profile"],
 });
 
 const gCallback = passport.authenticate('google', {

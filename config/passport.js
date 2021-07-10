@@ -60,6 +60,7 @@ passport.use(
             clientID: process.env.FB_CLIENTID,
             clientSecret: process.env.FB_SECRET,
             callbackURL: process.env.FB_REDIRECT_URI,
+            profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified']
         },
         (accessToken, refreshToken, profile, done) => {
             return done(null, profile);
