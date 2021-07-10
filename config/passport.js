@@ -74,7 +74,7 @@ passport.serializeUser(async (profile, done) => {
     console.log(profile);
     if (profile.provider) {
         //Vamos a obtener los datos del usuario a partir del ID
-        let email = profile.email;
+        let email = profile._json.email;
 
         //1. Comprobar si el correo obtenido ya está registrado en nuestro sistema
         //2. Si no existe... -> crear una cuenta con los datos que recibo del proveedor
@@ -82,8 +82,8 @@ passport.serializeUser(async (profile, done) => {
         let user = await checkUserExist(email);
         let providerId = profile.id;
         
-        let firstname = profile.provider === "google" ? profile.given_name : profile.displayName;
-        let lastname = profile.provider === "google" ? profile.family_name : "null";
+        let firstname = profile.provider === "google" ? profile.given_name : profile.givenName;
+        let lastname = profile.provider === "google" ? profile.family_name : profile.name.familyName;
 
         let userObj = {
             firstname,
